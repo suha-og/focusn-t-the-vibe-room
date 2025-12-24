@@ -406,8 +406,8 @@ const StudyRoom = () => {
           </div>
         </div>
 
-        {/* Users list - with safe zone spacing for popups */}
-        <div className="mt-16 md:mt-20 lg:mt-24 pt-8 animate-fade-in" style={{ animationDelay: "0.6s" }}>
+        {/* Users list - with hard exclusion zone spacing for modals */}
+        <div className="mt-32 md:mt-40 lg:mt-48 pt-16 md:pt-12 animate-fade-in" style={{ animationDelay: "0.6s" }}>
           <GlassCard>
             <p className="text-sm text-muted-foreground mb-4 font-display">
               FELLOW PROCRASTINATORS
