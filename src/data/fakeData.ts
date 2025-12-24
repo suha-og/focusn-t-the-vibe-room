@@ -83,6 +83,70 @@ export const aiResponses = [
   "Let me consult my source: pure chaos.",
   "The answer is somewhere between 'maybe' and 'probably not'.",
   "I'm just a parody AI, I have no idea what I'm doing.",
+  "Let's pretend we understand this and move on.",
+];
+
+export const excuses = [
+  "Network issues during submission",
+  "Laptop updated itself emotionally",
+  "ChatGPT misunderstood my intentions",
+  "My code worked on my machine",
+  "The deadline was in a different timezone",
+  "I was debugging my life choices",
+  "GitHub ate my homework",
+  "My IDE had commitment issues",
+  "The WiFi was having an identity crisis",
+  "My brain's RAM was full",
+  "Stack Overflow was down (emotionally)",
+  "I was caught in a merge conflict with reality",
+  "My motivation was on airplane mode",
+  "The compiler didn't understand my vision",
+  "I was refactoring my sleep schedule",
+];
+
+export const deluluAffirmations = [
+  "You will top. Manifesting ✨",
+  "Understanding is optional.",
+  "You're just built different 💫",
+  "Main character energy activated",
+  "The exam will be easy because you believe ✨",
+  "You don't need notes, you have vibes",
+  "Topper material, fr fr 🌟",
+  "The curve will save you, trust",
+  "You studied in your past life 💅",
+  "Academic weapon loading... ✨",
+  "Failure is not in your vocabulary (neither is the syllabus)",
+];
+
+export const leaderboardData = {
+  mostTabsOpen: [
+    { name: "TabHoarder9000", score: 847 },
+    { name: "YOU", score: 423 },
+    { name: "ChromeCrasher", score: 312 },
+    { name: "RAMDestroyer", score: 287 },
+    { name: "BrowserBreaker", score: 201 },
+  ],
+  leastStudyingDone: [
+    { name: "ProcrastiPro", score: "0.3 mins" },
+    { name: "YOU", score: "2.1 mins" },
+    { name: "DistractedDan", score: "4.7 mins" },
+    { name: "NetflixNinja", score: "8.2 mins" },
+    { name: "ScrollQueen", score: "12.4 mins" },
+  ],
+  highestConfidence: [
+    { name: "DeluluDev", score: "99%" },
+    { name: "YOU", score: "97%" },
+    { name: "OverconfidentOllie", score: "94%" },
+    { name: "CluelesCarl", score: "91%" },
+    { name: "WingItWendy", score: "88%" },
+  ],
+};
+
+export const backgroundSounds = [
+  { id: "keyboard", label: "Keyboard Smashing", emoji: "⌨️" },
+  { id: "roommate", label: "Hostel Roommate", emoji: "🗣️" },
+  { id: "fan", label: "Fan Noise", emoji: "🌀" },
+  { id: "construction", label: "Construction", emoji: "🔨" },
 ];
 
 export const moods = [

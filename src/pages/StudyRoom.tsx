@@ -3,6 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { GlassCard } from "@/components/GlassCard";
 import { PresenceDot } from "@/components/PresenceDot";
 import { Button } from "@/components/ui/button";
+import { SoundPanel } from "@/components/SoundPanel";
+import { DeluluToggle } from "@/components/DeluluToggle";
+import { DeluluAffirmation } from "@/components/DeluluAffirmation";
+import { Leaderboard } from "@/components/Leaderboard";
+import { ExcuseGenerator } from "@/components/ExcuseGenerator";
+import { RealityCheck } from "@/components/RealityCheck";
+import { PanicButton } from "@/components/PanicButton";
 import {
   roomNames,
   demotivationalQuotes,
@@ -36,6 +43,7 @@ const StudyRoom = () => {
   const [inputMessage, setInputMessage] = useState("");
   const [popup, setPopup] = useState<string | null>(null);
   const [users] = useState(getRandomUsers(getRandomNumber(5, 12)));
+  const [deluluMode, setDeluluMode] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   const roomName = roomNames[Number(roomId) % roomNames.length];
@@ -143,13 +151,21 @@ const StudyRoom = () => {
 
   return (
     <div 
-      className="min-h-screen relative overflow-hidden transition-all duration-500"
+      className={`min-h-screen relative overflow-hidden transition-all duration-500 ${deluluMode ? "delulu-mode" : ""}`}
       style={getMoodStyles()}
     >
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-neon-cyan/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-neon-magenta/5 rounded-full blur-3xl" />
+      <div className={`absolute inset-0 transition-all duration-500 ${
+        deluluMode 
+          ? "bg-gradient-to-br from-neon-pink/10 via-background to-neon-purple/10" 
+          : "bg-gradient-to-br from-background via-background to-muted"
+      }`}>
+        <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full blur-3xl transition-all duration-500 ${
+          deluluMode ? "bg-neon-pink/10" : "bg-neon-cyan/5"
+        }`} />
+        <div className={`absolute bottom-0 right-0 w-[600px] h-[600px] rounded-full blur-3xl transition-all duration-500 ${
+          deluluMode ? "bg-neon-purple/10" : "bg-neon-magenta/5"
+        }`} />
       </div>
 
       {/* Grid overlay */}
@@ -185,7 +201,7 @@ const StudyRoom = () => {
 
       <div className="relative z-10 container mx-auto px-4 py-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8 animate-fade-in">
+        <div className="flex items-center justify-between mb-8 animate-fade-in flex-wrap gap-4">
           <Button
             variant="glass"
             size="sm"
@@ -196,7 +212,10 @@ const StudyRoom = () => {
             Escape
           </Button>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 flex-wrap">
+            {/* Delulu Toggle */}
+            <DeluluToggle enabled={deluluMode} onToggle={setDeluluMode} />
+
             <div className="flex items-center gap-2">
               {users.slice(0, 5).map((_, i) => (
                 <PresenceDot
@@ -222,26 +241,33 @@ const StudyRoom = () => {
 
         {/* Room title */}
         <div className="text-center mb-8 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-          <h1 className="text-3xl md:text-4xl font-display font-bold gradient-text mb-2">
+          <h1 className={`text-3xl md:text-4xl font-display font-bold mb-2 ${deluluMode ? "gradient-text" : "gradient-text"}`}>
             {roomName}
           </h1>
           <p className="text-muted-foreground text-sm">
-            A safe space for productive procrastination
+            {deluluMode ? "✨ Manifesting productivity ✨" : "A safe space for productive procrastination"}
           </p>
         </div>
 
+        {/* Delulu Affirmation */}
+        {deluluMode && (
+          <div className="mb-8 animate-fade-in">
+            <DeluluAffirmation />
+          </div>
+        )}
+
         <div className="grid lg:grid-cols-3 gap-6">
-          {/* Left column - Timer and quote */}
+          {/* Left column - Timer, quote, mood, sounds */}
           <div className="lg:col-span-2 space-y-6">
             {/* Timer */}
-            <GlassCard glow="cyan" className="animate-fade-in" style={{ animationDelay: "0.2s" } as React.CSSProperties}>
+            <GlassCard glow={deluluMode ? "magenta" : "cyan"} className="animate-fade-in" style={{ animationDelay: "0.2s" } as React.CSSProperties}>
               <div className="text-center">
                 <p className="text-sm text-muted-foreground mb-2 font-display">
-                  BROKEN POMODORO™
+                  {deluluMode ? "MANIFESTING TIMER™" : "BROKEN POMODORO™"}
                 </p>
                 <div
                   className={`text-7xl md:text-8xl font-display font-bold mb-6 transition-all ${
-                    timerValue < 0 ? "text-destructive animate-glitch" : "text-primary neon-text"
+                    timerValue < 0 ? "text-destructive animate-glitch" : deluluMode ? "text-neon-pink neon-text-magenta" : "text-primary neon-text"
                   } ${isRunning ? "animate-pulse-glow" : ""}`}
                 >
                   {formatTime(timerValue)}
@@ -282,6 +308,11 @@ const StudyRoom = () => {
               </p>
             </GlassCard>
 
+            {/* Sound Panel */}
+            <div className="animate-fade-in" style={{ animationDelay: "0.35s" }}>
+              <SoundPanel />
+            </div>
+
             {/* Mood selector */}
             <GlassCard className="animate-fade-in" style={{ animationDelay: "0.4s" } as React.CSSProperties}>
               <p className="text-sm text-muted-foreground mb-4 font-display">
@@ -304,11 +335,23 @@ const StudyRoom = () => {
                 ))}
               </div>
             </GlassCard>
+
+            {/* Action buttons row */}
+            <div className="flex flex-wrap gap-4 justify-center animate-fade-in" style={{ animationDelay: "0.45s" }}>
+              <RealityCheck />
+              <PanicButton />
+            </div>
+
+            {/* Excuse Generator */}
+            <div className="animate-fade-in" style={{ animationDelay: "0.5s" }}>
+              <ExcuseGenerator />
+            </div>
           </div>
 
-          {/* Right column - AI Chat */}
-          <div className="animate-fade-in" style={{ animationDelay: "0.5s" }}>
-            <GlassCard glow="purple" className="h-full flex flex-col">
+          {/* Right column - AI Chat and Leaderboard */}
+          <div className="space-y-6 animate-fade-in" style={{ animationDelay: "0.5s" }}>
+            {/* AI Chat */}
+            <GlassCard glow="purple" className="flex flex-col">
               <div className="flex items-center gap-2 mb-4">
                 <PresenceDot color="magenta" />
                 <h3 className="font-display font-semibold text-foreground">
@@ -318,7 +361,7 @@ const StudyRoom = () => {
               </div>
 
               {/* Chat messages */}
-              <div className="flex-1 overflow-y-auto max-h-[400px] space-y-3 mb-4 pr-2">
+              <div className="flex-1 overflow-y-auto max-h-[300px] space-y-3 mb-4 pr-2">
                 {chatMessages.length === 0 && (
                   <p className="text-sm text-muted-foreground text-center py-8">
                     Ask me anything! I probably won't help.
@@ -358,6 +401,9 @@ const StudyRoom = () => {
                 </Button>
               </div>
             </GlassCard>
+
+            {/* Leaderboard */}
+            <Leaderboard />
           </div>
         </div>
 
