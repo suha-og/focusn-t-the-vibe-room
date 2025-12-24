@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { PopupProvider } from "@/hooks/usePopupManager";
 import { GlassCard } from "@/components/GlassCard";
 import { PresenceDot } from "@/components/PresenceDot";
 import { Button } from "@/components/ui/button";
@@ -150,6 +151,7 @@ const StudyRoom = () => {
   };
 
   return (
+    <PopupProvider>
     <div 
       className={`min-h-screen relative overflow-hidden transition-all duration-500 ${deluluMode ? "delulu-mode" : ""}`}
       style={getMoodStyles()}
@@ -439,6 +441,7 @@ const StudyRoom = () => {
         </footer>
       </div>
     </div>
+    </PopupProvider>
   );
 };
 
