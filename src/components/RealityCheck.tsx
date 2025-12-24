@@ -31,10 +31,13 @@ export const RealityCheck = () => {
       {isOpen && (
         <PopupBackdrop className="animate-screen-shake">
           {/* Flashing red overlay */}
-          <div className="absolute inset-0 reality-check-overlay bg-destructive/20" />
+          <div className="absolute inset-0 reality-check-overlay bg-destructive/30 pointer-events-none" />
           
           {/* Content */}
-          <div className="relative z-10 bg-background/95 border-2 border-destructive rounded-2xl p-8 max-w-md mx-4 animate-scale-in">
+          <div 
+            className="relative z-10 bg-background border-2 border-destructive rounded-2xl p-8 max-w-md mx-4 animate-scale-in shadow-2xl"
+            style={{ pointerEvents: "auto" }}
+          >
             {/* Close button */}
             <button
               onClick={handleClose}

@@ -32,13 +32,16 @@ export const PanicButton = () => {
       {isOpen && (
         <PopupBackdrop>
           {/* Chaotic background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-destructive/40 via-orange-500/30 to-destructive/40 animate-alarm" />
+          <div className="absolute inset-0 bg-gradient-to-br from-destructive/50 via-orange-500/40 to-destructive/50 animate-alarm pointer-events-none" />
           
           {/* Animated flames border effect */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,hsla(0,84%,60%,0.4),transparent_70%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,hsla(0,84%,60%,0.5),transparent_70%)] pointer-events-none" />
           
           {/* Content */}
-          <div className="relative z-10 bg-background/95 border-4 border-destructive rounded-3xl p-10 max-w-lg mx-4 animate-bounce-in">
+          <div 
+            className="relative z-10 bg-background border-4 border-destructive rounded-3xl p-10 max-w-lg mx-4 animate-bounce-in shadow-2xl"
+            style={{ pointerEvents: "auto" }}
+          >
             {/* Close button */}
             <button
               onClick={handleClose}
