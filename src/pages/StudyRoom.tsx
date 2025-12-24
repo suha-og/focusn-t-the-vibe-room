@@ -344,10 +344,7 @@ const StudyRoom = () => {
               <PanicButton />
             </div>
 
-            {/* Excuse Generator */}
-            <div className="animate-fade-in" style={{ animationDelay: "0.5s" }}>
-              <ExcuseGenerator />
-            </div>
+            {/* ExcuseGenerator is now a fixed floating button - rendered outside the grid */}
           </div>
 
           {/* Right column - AI Chat and Leaderboard */}
@@ -433,7 +430,7 @@ const StudyRoom = () => {
         </div>
 
         {/* Footer */}
-        <footer className="text-center mt-12 text-muted-foreground animate-fade-in" style={{ animationDelay: "0.7s" }}>
+        <footer className="text-center mt-12 mb-24 text-muted-foreground animate-fade-in" style={{ animationDelay: "0.7s" }}>
           <p className="text-sm">
             <span className="gradient-text font-semibold">0% logic. 100% vibes.</span>
           </p>
@@ -441,6 +438,9 @@ const StudyRoom = () => {
         </footer>
       </div>
     </div>
+
+      {/* Fixed floating Excuse Generator - outside main content flow */}
+      <ExcuseGenerator />
     </PopupProvider>
   );
 };
