@@ -1,16 +1,19 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { PopupBackdrop } from "@/components/PopupBackdrop";
+import { usePopupManager } from "@/hooks/usePopupManager";
 import { Flame, X } from "lucide-react";
 
 export const PanicButton = () => {
-  const [isPanicking, setIsPanicking] = useState(false);
+  const { activePopup, openPopup, closePopup } = usePopupManager();
+
+  const isOpen = activePopup === "panic";
 
   const triggerPanic = () => {
-    setIsPanicking(true);
+    openPopup("panic");
   };
 
-  const dismiss = () => {
-    setIsPanicking(false);
+  const handleClose = () => {
+    closePopup();
   };
 
   return (
@@ -26,8 +29,8 @@ export const PanicButton = () => {
       </Button>
 
       {/* Panic Overlay */}
-      {isPanicking && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
+      {isOpen && (
+        <PopupBackdrop>
           {/* Chaotic background */}
           <div className="absolute inset-0 bg-gradient-to-br from-destructive/40 via-orange-500/30 to-destructive/40 animate-alarm" />
           
@@ -36,6 +39,14 @@ export const PanicButton = () => {
           
           {/* Content */}
           <div className="relative z-10 bg-background/95 border-4 border-destructive rounded-3xl p-10 max-w-lg mx-4 animate-bounce-in">
+            {/* Close button */}
+            <button
+              onClick={handleClose}
+              className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
             <div className="text-center">
               {/* Flames animation */}
               <div className="flex justify-center gap-2 mb-4">
@@ -68,15 +79,15 @@ export const PanicButton = () => {
               
               <Button
                 variant="outline"
-                onClick={dismiss}
+                onClick={handleClose}
                 className="w-full border-destructive/50 hover:bg-destructive/20"
               >
                 <X className="w-4 h-4 mr-2" />
-                Continue Panicking Privately
+                Accept Fate
               </Button>
             </div>
           </div>
-        </div>
+        </PopupBackdrop>
       )}
     </>
   );
