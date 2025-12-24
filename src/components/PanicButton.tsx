@@ -39,7 +39,7 @@ export const PanicButton = () => {
           
           {/* Content */}
           <div 
-            className="relative z-10 bg-background border-4 border-destructive rounded-3xl p-10 pb-12 md:pb-10 mb-8 md:mb-4 max-w-lg mx-4 animate-bounce-in shadow-2xl"
+            className="relative z-10 bg-background border-4 border-destructive rounded-3xl p-10 pb-14 md:pb-12 mb-20 md:mb-16 max-w-lg mx-4 animate-bounce-in shadow-2xl"
             style={{ pointerEvents: "auto" }}
           >
             {/* Close button */}
