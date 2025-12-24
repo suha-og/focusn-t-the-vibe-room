@@ -118,6 +118,24 @@ export const deluluAffirmations = [
   "Failure is not in your vocabulary (neither is the syllabus)",
 ];
 
+export const futureYouMessages = [
+  "Hey. It's you from results day. You survived.",
+  "Backlogs cleared. Mentally not.",
+  "You passed. Don't ask how.",
+  "Future you says thanks for at least opening the notes.",
+  "It worked out. The method was questionable.",
+  "Spoiler: you get the job. After 47 rejections.",
+  "You're reading this in a better place. Same room though.",
+  "The all-nighter was worth it. Barely.",
+  "You'll laugh about this later. Nervously.",
+  "Things get better. The imposter syndrome doesn't.",
+  "You made it. Your sleep schedule didn't.",
+  "Plot twist: you become the person others ask for help.",
+  "Future you is proud. And still confused.",
+  "The anxiety was unnecessary. The panic was valid though.",
+  "You survived the viva. The PTSD remains.",
+];
+
 export const leaderboardData = {
   mostTabsOpen: [
     { name: "TabHoarder9000", score: 847 },

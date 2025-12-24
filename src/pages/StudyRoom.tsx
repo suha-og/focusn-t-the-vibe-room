@@ -11,6 +11,7 @@ import { Leaderboard } from "@/components/Leaderboard";
 import { ExcuseGenerator } from "@/components/ExcuseGenerator";
 import { RealityCheck } from "@/components/RealityCheck";
 import { PanicButton } from "@/components/PanicButton";
+import { FutureYouMessage } from "@/components/FutureYouMessage";
 import {
   roomNames,
   demotivationalQuotes,
@@ -200,6 +201,9 @@ const StudyRoom = () => {
           </div>
         </div>
       )}
+
+      {/* Future You Messages - non-blocking toast */}
+      <FutureYouMessage />
 
       <div className="relative z-10 container mx-auto px-4 py-8">
         {/* Header */}
