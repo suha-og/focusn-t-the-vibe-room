@@ -176,7 +176,7 @@ const StudyRoom = () => {
       {/* Peer pressure popup */}
       {popup && (
         <div className="fixed top-4 right-4 z-50 animate-bounce-in">
-          <GlassCard className="bg-neon-magenta/20 border-neon-magenta/50 max-w-sm">
+          <div className="bg-background/95 backdrop-blur-md border-2 border-neon-magenta/60 rounded-2xl p-4 shadow-2xl shadow-neon-magenta/20 max-w-sm">
             <div className="flex items-start gap-3">
               <Skull className="w-6 h-6 text-neon-magenta flex-shrink-0" />
               <div className="flex-1">
@@ -197,7 +197,7 @@ const StudyRoom = () => {
             >
               Ignore Reality
             </Button>
-          </GlassCard>
+          </div>
         </div>
       )}
 
