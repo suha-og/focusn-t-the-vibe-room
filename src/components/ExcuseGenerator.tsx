@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { GlassCard } from "@/components/GlassCard";
 import { Button } from "@/components/ui/button";
 import { usePopupManager } from "@/hooks/usePopupManager";
 import { excuses, getRandomItem } from "@/data/fakeData";
@@ -52,23 +51,23 @@ export const ExcuseGenerator = () => {
 
   return (
     <>
-      <GlassCard>
-        <p className="text-sm text-muted-foreground mb-3 font-display">EXCUSE GENERATOR</p>
+      {/* Fixed floating button - docked at bottom right */}
+      <div className={`fixed bottom-6 right-6 z-30 transition-opacity duration-300 ${isPrimaryModalOpen ? 'opacity-40 pointer-events-none' : 'opacity-100'}`}>
         <Button 
           variant="chaos" 
-          onClick={generateExcuse} 
-          className="w-full"
+          onClick={generateExcuse}
           disabled={isPrimaryModalOpen}
+          className="shadow-lg shadow-primary/20"
         >
           <Shuffle className="w-4 h-4 mr-2" />
           Generate Excuse
         </Button>
-      </GlassCard>
+      </div>
 
-      {/* Excuse Toast - Bottom positioned, below modal layer */}
+      {/* Excuse Toast - positioned above the floating button */}
       {isVisible && currentExcuse && !isPrimaryModalOpen && (
-        <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-md z-40 animate-fade-in">
-          <div className="bg-background/95 border-2 border-primary/50 rounded-2xl p-4 shadow-2xl backdrop-blur-sm">
+        <div className="fixed bottom-20 right-6 left-6 md:left-auto md:max-w-md z-30 animate-fade-in">
+          <div className="bg-background border-2 border-primary/50 rounded-2xl p-4 shadow-2xl">
             {/* Close button */}
             <button
               onClick={handleClose}

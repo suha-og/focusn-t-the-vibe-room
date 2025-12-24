@@ -34,17 +34,7 @@ export const PopupProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [activePopup, closePopup]);
 
-  // Disable body scroll when popup is open
-  useEffect(() => {
-    if (activePopup) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [activePopup]);
+  // NOTE: Body scroll is NOT locked - page remains scrollable when modal is open
 
   const isPrimaryModalOpen = activePopup !== null;
 
