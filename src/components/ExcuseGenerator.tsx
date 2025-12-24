@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GlassCard } from "@/components/GlassCard";
-import { PopupBackdrop } from "@/components/PopupBackdrop";
 import { Button } from "@/components/ui/button";
 import { usePopupManager } from "@/hooks/usePopupManager";
 import { excuses, getRandomItem } from "@/data/fakeData";
@@ -9,17 +8,34 @@ import { Shuffle, Copy, Check, X } from "lucide-react";
 export const ExcuseGenerator = () => {
   const [currentExcuse, setCurrentExcuse] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
-  const { activePopup, openPopup, closePopup } = usePopupManager();
+  const [isVisible, setIsVisible] = useState(false);
+  const { isPrimaryModalOpen } = usePopupManager();
 
-  const isOpen = activePopup === "excuse";
+  // Auto-hide when primary modal opens
+  useEffect(() => {
+    if (isPrimaryModalOpen && isVisible) {
+      setIsVisible(false);
+    }
+  }, [isPrimaryModalOpen, isVisible]);
+
+  // Auto-dismiss after 10 seconds
+  useEffect(() => {
+    if (isVisible) {
+      const timeout = setTimeout(() => {
+        setIsVisible(false);
+      }, 10000);
+      return () => clearTimeout(timeout);
+    }
+  }, [isVisible, currentExcuse]);
 
   const generateExcuse = () => {
+    // Don't open if primary modal is active
+    if (isPrimaryModalOpen) return;
+    
     const newExcuse = getRandomItem(excuses);
     setCurrentExcuse(newExcuse);
     setCopied(false);
-    if (!isOpen) {
-      openPopup("excuse");
-    }
+    setIsVisible(true);
   };
 
   const copyExcuse = () => {
@@ -31,83 +47,85 @@ export const ExcuseGenerator = () => {
   };
 
   const handleClose = () => {
-    closePopup();
+    setIsVisible(false);
   };
 
   return (
     <>
       <GlassCard>
         <p className="text-sm text-muted-foreground mb-3 font-display">EXCUSE GENERATOR</p>
-        <Button variant="chaos" onClick={generateExcuse} className="w-full">
+        <Button 
+          variant="chaos" 
+          onClick={generateExcuse} 
+          className="w-full"
+          disabled={isPrimaryModalOpen}
+        >
           <Shuffle className="w-4 h-4 mr-2" />
           Generate Excuse
         </Button>
       </GlassCard>
 
-      {/* Excuse Popup Modal */}
-      {isOpen && currentExcuse && (
-        <PopupBackdrop>
-          {/* Backdrop overlay */}
-          <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
-          
-          {/* Modal content */}
-          <div className="relative z-10 bg-background/95 border-2 border-primary/50 rounded-2xl p-6 max-w-md mx-4 animate-scale-in shadow-2xl">
+      {/* Excuse Toast - Bottom positioned, below modal layer */}
+      {isVisible && currentExcuse && !isPrimaryModalOpen && (
+        <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-md z-40 animate-fade-in">
+          <div className="bg-background/95 border-2 border-primary/50 rounded-2xl p-4 shadow-2xl backdrop-blur-sm">
             {/* Close button */}
             <button
               onClick={handleClose}
-              className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
+              className="absolute top-3 right-3 text-muted-foreground hover:text-foreground transition-colors"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
 
-            <div className="text-center">
-              <h3 className="text-lg font-display font-bold text-primary mb-4">
+            <div className="pr-6">
+              <h3 className="text-sm font-display font-bold text-primary mb-2">
                 🎭 YOUR EXCUSE
               </h3>
               
-              <div className="bg-muted/50 rounded-lg p-4 mb-4">
-                <p className="text-lg text-foreground italic">"{currentExcuse}"</p>
+              <div className="bg-muted/50 rounded-lg p-3 mb-3">
+                <p className="text-sm text-foreground italic">"{currentExcuse}"</p>
               </div>
 
-              {/* Copy indicator */}
-              <button
-                onClick={copyExcuse}
-                className="flex items-center justify-center gap-2 w-full text-sm text-muted-foreground hover:text-primary transition-colors mb-6"
-              >
-                {copied ? (
-                  <>
-                    <Check className="w-4 h-4 text-neon-green" />
-                    Copied to clipboard!
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-4 h-4" />
-                    Click to copy
-                  </>
-                )}
-              </button>
-
               {/* Action buttons */}
-              <div className="flex gap-3">
-                <Button
-                  variant="chaos"
-                  onClick={generateExcuse}
-                  className="flex-1"
+              <div className="flex gap-2 items-center">
+                <button
+                  onClick={copyExcuse}
+                  className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors"
                 >
-                  <Shuffle className="w-4 h-4 mr-2" />
-                  Another One
+                  {copied ? (
+                    <>
+                      <Check className="w-3 h-3 text-neon-green" />
+                      Copied!
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3 h-3" />
+                      Copy
+                    </>
+                  )}
+                </button>
+                <div className="flex-1" />
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={generateExcuse}
+                  className="h-8 text-xs"
+                >
+                  <Shuffle className="w-3 h-3 mr-1" />
+                  Another
                 </Button>
                 <Button
                   variant="glass"
+                  size="sm"
                   onClick={handleClose}
-                  className="flex-1"
+                  className="h-8 text-xs"
                 >
                   Close
                 </Button>
               </div>
             </div>
           </div>
-        </PopupBackdrop>
+        </div>
       )}
     </>
   );

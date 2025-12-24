@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useState, useCallback, useEffect } from "react";
 
-type PopupType = "excuse" | "reality" | "panic" | null;
+type PopupType = "reality" | "panic" | null; // Primary modals only
 
 interface PopupContextType {
   activePopup: PopupType;
   openPopup: (type: PopupType) => void;
   closePopup: () => void;
+  isPrimaryModalOpen: boolean;
 }
 
 const PopupContext = createContext<PopupContextType | undefined>(undefined);
@@ -45,8 +46,10 @@ export const PopupProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
   }, [activePopup]);
 
+  const isPrimaryModalOpen = activePopup !== null;
+
   return (
-    <PopupContext.Provider value={{ activePopup, openPopup, closePopup }}>
+    <PopupContext.Provider value={{ activePopup, openPopup, closePopup, isPrimaryModalOpen }}>
       {children}
     </PopupContext.Provider>
   );
