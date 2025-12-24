@@ -35,7 +35,7 @@ export const RealityCheck = () => {
           
           {/* Content */}
           <div 
-            className="relative z-10 bg-background border-2 border-destructive rounded-2xl p-8 max-w-md mx-4 animate-scale-in shadow-2xl"
+            className="relative z-10 bg-background border-2 border-destructive rounded-2xl p-8 pb-10 md:pb-8 mb-8 md:mb-4 max-w-md mx-4 animate-scale-in shadow-2xl"
             style={{ pointerEvents: "auto" }}
           >
             {/* Close button */}
